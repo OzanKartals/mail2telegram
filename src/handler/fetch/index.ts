@@ -91,6 +91,17 @@ function createRouter(env: Environment): RouterType {
         });
     });
 
+    router.get('/debug-env', async (): Promise<any> => {
+        return {
+            hasToken: !!TELEGRAM_TOKEN,
+            tokenLength: TELEGRAM_TOKEN ? TELEGRAM_TOKEN.length : 0,
+            tokenPrefix: TELEGRAM_TOKEN ? TELEGRAM_TOKEN.slice(0, 6) : null,
+            tokenSuffix: TELEGRAM_TOKEN ? TELEGRAM_TOKEN.slice(-6) : null,
+            hasDomain: !!DOMAIN,
+            domain: DOMAIN || null,
+        };
+    });
+
     router.get('/init', async (): Promise<any> => {
         const api = createTelegramBotAPI(TELEGRAM_TOKEN);
         const webhook = await api.setWebhook({
