@@ -19,7 +19,15 @@ export async function renderEmailListMode(mail: EmailCache, env: Environment): P
         AI,
         DOMAIN,
     } = env;
-    const text = `${mail.subject}\n\n-----------\nFrom\t:\t${mail.from}\nTo\t\t:\t${mail.to}`;
+    const header = `${mail.subject}\n\n-----------\nFrom\t:\t${mail.from}\nTo\t\t:\t${mail.to}\n-----------\n\n`;
+    const maxTelegramLength = 4096;
+    const truncationNotice = '\n\n[...truncated, see Text/HTML button for full content]';
+    const bodyBudget = Math.max(maxTelegramLength - header.length - truncationNotice.length, 0);
+    let body = mail.text || '(No text content)';
+    if (body.length > bodyBudget) {
+        body = `${body.slice(0, bodyBudget)}${truncationNotice}`;
+    }
+    const text = header + body;
     const keyboard: Telegram.InlineKeyboardButton[] = [
         {
             text: 'Preview',
