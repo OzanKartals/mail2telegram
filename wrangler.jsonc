@@ -1,0 +1,1 @@
+{"name":"mail2telegram-bridge","main":"src/index.ts","compatibility_date":"2025-09-15","compatibility_flags":["nodejs_compat_v2"],"kv_namespaces":[{"binding":"DB","id":"1267a9ec65fe4fd68605bcb2b728d912"}],"ai":{"binding":"AI"}}
